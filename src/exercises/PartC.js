@@ -1,48 +1,48 @@
 // PartC.js - Практика JSX
 
-import React, { useState } from 'react';
+import React from 'react';
 
 // ========== Упражнения простого уровня сложности ==========
 
 // Упражнение 1 – Простой заголовок JSX
-const titleElement = <h1>Welcome to Engineering College</h1>;
+const titleElement = React.createElement('h1', null, 'Welcome to Engineering College');
 
 // Упражнение 2 – JSX с встроенным выражением
 const firstName = "Nurlan";
 const lastName = "Shaidullaev";
-const greetingElement = <p>Hello, {firstName} {lastName}!</p>;
+const greetingElement = React.createElement('p', null, 'Hello, ' + firstName + ' ' + lastName + '!');
 
 // Упражнение 3 – Исправление названий атрибутов
 function Header() {
   const handleClick = () => {
     alert('Hi');
   };
-  
-  return (
-    <div className="header">
-      <h1 onClick={handleClick}>Click me</h1>
-    </div>
+
+  return React.createElement(
+    'div',
+    { className: 'header' },
+    React.createElement('h1', { onClick: handleClick }, 'Click me')
   );
 }
 
 // Упражнение 4 – Корневой элемент с одним корнем
 function Greeting() {
-  return (
-    <div>
-      <h1>Hello</h1>
-      <p>Welcome to the course</p>
-    </div>
+  return React.createElement(
+    'div',
+    null,
+    React.createElement('h1', null, 'Hello'),
+    React.createElement('p', null, 'Welcome to the course')
   );
 }
 
 // Упражнение 5 – Самозакрывающиеся теги
 function Avatar() {
-  return (
-    <div>
-      <img src="/avatar.png" alt="Avatar" />
-      <br />
-      <span>Student</span>
-    </div>
+  return React.createElement(
+    'div',
+    null,
+    React.createElement('img', { src: '/avatar.png', alt: 'Avatar' }),
+    React.createElement('br', null),
+    React.createElement('span', null, 'Student')
   );
 }
 
@@ -52,29 +52,29 @@ function Clicker() {
     console.log("Clicked!");
   }
 
-  return (
-    <button onClick={handleClick}>
-      Click me
-    </button>
+  return React.createElement(
+    'button',
+    { onClick: handleClick },
+    'Click me'
   );
 }
 
 // Упражнение 22 – Именование компонентов и регистр символов
 function ProfileCard(props) {
-  return (
-    <div className="profile-card">
-      <h3>{props.name}</h3>
-    </div>
+  return React.createElement(
+    'div',
+    { className: 'profile-card' },
+    React.createElement('h3', null, props.name)
   );
 }
 
 // Упражнение 23 – Комментарии JSX
 function Title() {
-  return (
-    <div>
-      {/* Main title of the page */}
-      <h1>JSX Practice</h1>
-    </div>
+  // Main title of the page
+  return React.createElement(
+    'div',
+    null,
+    React.createElement('h1', null, 'JSX Practice')
   );
 }
 
@@ -90,51 +90,53 @@ const elementExercise6 = React.createElement(
 
 // Упражнение 7 – Использование свойств в JSX
 function StudentCard(props) {
-  return (
-    <div className="student-card">
-      <h3>{props.name}</h3>
-      <p>Group: {props.group}</p>
-    </div>
+  return React.createElement(
+    'div',
+    { className: 'student-card' },
+    React.createElement('h3', null, props.name),
+    React.createElement('p', null, 'Group: ' + props.group)
   );
 }
 
 // Упражнение 8 – Деструктуризация опорных конструкций
 function CourseInfo({ title, credits }) {
-  return (
-    <div>
-      <h2>{title}</h2>
-      <p>Credits: {credits}</p>
-    </div>
+  return React.createElement(
+    'div',
+    null,
+    React.createElement('h2', null, title),
+    React.createElement('p', null, 'Credits: ' + credits)
   );
 }
 
 // Упражнение 9 – Условная отрисовка с использованием тернарного синтаксиса
 function Status({ isOnline }) {
-  return (
-    <div>
-      {isOnline ? <p>Online</p> : <p>Offline</p>}
-    </div>
+  return React.createElement(
+    'div',
+    null,
+    isOnline ?
+      React.createElement('p', null, 'Online') :
+      React.createElement('p', null, 'Offline')
   );
 }
 
 // Упражнение 10 – Условная отрисовка с &&
 function Notification({ count }) {
-  return (
-    <div>
-      <h2>Notifications</h2>
-      {count > 0 && <p>You have {count} new notifications</p>}
-    </div>
+  return React.createElement(
+    'div',
+    null,
+    React.createElement('h2', null, 'Notifications'),
+    count > 0 && React.createElement('p', null, 'You have ' + count + ' new notifications')
   );
 }
 
 // Упражнение 11 – Отображение списков с ключами
 function TaskList({ tasks }) {
-  return (
-    <ul>
-      {tasks.map(task => (
-        <li key={task.id}>{task.title}</li>
-      ))}
-    </ul>
+  return React.createElement(
+    'ul',
+    null,
+    tasks.map(task =>
+      React.createElement('li', { key: task.id }, task.title)
+    )
   );
 }
 
@@ -144,46 +146,46 @@ function StudentSelector() {
     console.log("Selected id:", id);
   }
 
-  return (
-    <button onClick={() => handleSelect(5)}>
-      Select student
-    </button>
+  return React.createElement(
+    'button',
+    { onClick: () => handleSelect(5) },
+    'Select student'
   );
 }
 
 // Упражнение 15 – Встроенные стили
 function WarningBox() {
-  return (
-    <div style={{ backgroundColor: 'yellow', padding: '10px' }}>
-      Warning!
-    </div>
+  return React.createElement(
+    'div',
+    { style: { backgroundColor: 'yellow', padding: '10px' } },
+    'Warning!'
   );
 }
 
 // Упражнение 16 – Фрагменты вместо дополнительных элементов <div>
 function Info() {
-  return (
-    <>
-      <h2>About the course</h2>
-      <p>This course teaches React basics.</p>
-    </>
+  return React.createElement(
+    React.Fragment,
+    null,
+    React.createElement('h2', null, 'About the course'),
+    React.createElement('p', null, 'This course teaches React basics.')
   );
 }
 
 // Упражнение 17 – Детская реквизитная работа
 function Card({ title, children }) {
-  return (
-    <div className="card">
-      <h3>{title}</h3>
-      <div className="card-body">{children}</div>
-    </div>
+  return React.createElement(
+    'div',
+    { className: 'card' },
+    React.createElement('h3', null, title),
+    React.createElement('div', { className: 'card-body' }, children)
   );
 }
 
-const cardUsage = (
-  <Card title="JSX Topic">
-    <p>We are learning JSX today.</p>
-  </Card>
+const cardUsage = React.createElement(
+  Card,
+  { title: "JSX Topic" },
+  React.createElement('p', null, 'We are learning JSX today.')
 );
 
 // Упражнение 18 – Распределение опор
@@ -194,57 +196,61 @@ const user = {
 };
 
 function UserProfile({ name, age, group }) {
-  return (
-    <div>
-      <h3>{name}</h3>
-      <p>Age: {age}</p>
-      <p>Group: {group}</p>
-    </div>
+  return React.createElement(
+    'div',
+    null,
+    React.createElement('h3', null, name),
+    React.createElement('p', null, 'Age: ' + age),
+    React.createElement('p', null, 'Group: ' + group)
   );
 }
 
-const userProfileWithSpread = <UserProfile {...user} />;
-const userProfileExplicit = <UserProfile name={user.name} age={user.age} group={user.group} />;
+const userProfileWithSpread = React.createElement(UserProfile, user);
+const userProfileExplicit = React.createElement(
+  UserProfile,
+  { name: user.name, age: user.age, group: user.group }
+);
 
 // Упражнение 19 – Выражения против операторов в JSX
 function Access({ isAdmin }) {
-  return (
-    <div>
-      {isAdmin ? (
-        <p>Welcome, admin!</p>
-      ) : (
-        <p>Access denied</p>
-      )}
-    </div>
+  return React.createElement(
+    'div',
+    null,
+    isAdmin ?
+      React.createElement('p', null, 'Welcome, admin!') :
+      React.createElement('p', null, 'Access denied')
   );
 }
 
 // Упражнение 20 – Контролируемый ввод
 function NameInput() {
-  const [name, setName] = useState("");
+  const [name, setName] = React.useState("");
 
-  return (
-    <div>
-      <input 
-        type="text" 
-        value={name} 
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Enter your name"
-      />
-      <p>Hello, {name || 'Stranger'}!</p>
-    </div>
+  const handleChange = (e) => {
+    setName(e.target.value);
+  };
+
+  return React.createElement(
+    'div',
+    null,
+    React.createElement('input', {
+      type: 'text',
+      value: name,
+      onChange: handleChange,
+      placeholder: 'Enter your name'
+    }),
+    React.createElement('p', null, 'Hello, ' + (name || 'Stranger') + '!')
   );
 }
 
 // Упражнение 24 – Сложное форматирование JSX
 function Dashboard({ user, notifications }) {
-  return (
-    <div>
-      <h1>{user.name}'s Dashboard</h1>
-      {notifications.length > 0 && (
-        <p>You have {notifications.length} new notifications.</p>
-      )}
-    </div>
+  return React.createElement(
+    'div',
+    null,
+    React.createElement('h1', null, user.name + "'s Dashboard"),
+    notifications.length > 0 &&
+    React.createElement('p', null, 'You have ' + notifications.length + ' new notifications.')
   );
 }
 
@@ -253,19 +259,14 @@ function Example() {
   const a = 2;
   const b = 3;
 
-  return (
-    <div>
-      <p>{a + b}</p>
-      <p>{a > b ? "a is bigger" : "b is bigger or equal"}</p>
-      <p>{false && "This text"}</p>
-    </div>
+  return React.createElement(
+    'div',
+    null,
+    React.createElement('p', null, a + b),
+    React.createElement('p', null, a > b ? "a is bigger" : "b is bigger or equal"),
+    React.createElement('p', null, false && "This text")
   );
 }
-
-// Ответ на Упражнение 25:
-// 1. <p>5</p>
-// 2. <p>b is bigger or equal</p>
-// 3. <p></p> (ничего не отобразится, так как false && что-либо = false)
 
 // ========== Упражнения сложного уровня ==========
 
@@ -276,7 +277,7 @@ function StudentList() {
   return React.createElement(
     'ul',
     null,
-    students.map((name, index) => 
+    students.map((name, index) =>
       React.createElement('li', { key: index }, name)
     )
   );
@@ -284,8 +285,9 @@ function StudentList() {
 
 // Упражнение 21 – Безопасность JSX и XSS
 function HtmlBlock({ html }) {
-  return (
-    <div dangerouslySetInnerHTML={{ __html: html }} />
+  return React.createElement(
+    'div',
+    { dangerouslySetInnerHTML: { __html: html } }
   );
 }
 
@@ -308,148 +310,151 @@ export const PartC = () => {
     { id: 2, message: 'Assignment due' }
   ];
 
-  return (
-    <div className="part-c-container">
-      <h1>Часть C: Практика JSX</h1>
-      
-      <section className="exercise-group">
-        <h2>Простые упражнения</h2>
-        
-        <div className="exercise">
-          <h3>Упражнение 1: Простой заголовок JSX</h3>
-          {titleElement}
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 2: JSX с встроенным выражением</h3>
-          {greetingElement}
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 3: Исправление названий атрибутов</h3>
-          <Header />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 4: Корневой элемент с одним корнем</h3>
-          <Greeting />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 5: Самозакрывающиеся теги</h3>
-          <Avatar />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 13: Синтаксис обработчика событий</h3>
-          <Clicker />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 22: Именование компонентов</h3>
-          <ProfileCard name="Test User" />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 23: Комментарии JSX</h3>
-          <Title />
-        </div>
-      </section>
-      
-      <section className="exercise-group">
-        <h2>Средние упражнения</h2>
-        
-        <div className="exercise">
-          <h3>Упражнение 6: JSX vs React.createElement</h3>
-          <p>См. исходный код: elementExercise6 создан через React.createElement</p>
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 7: Использование свойств в JSX</h3>
-          <StudentCard name="Alice" group="CS-101" />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 8: Деструктуризация</h3>
-          <CourseInfo title="React Basics" credits={3} />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 9: Условная отрисовка (тернарный оператор)</h3>
-          <Status isOnline={true} /> <Status isOnline={false} />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 10: Условная отрисовка (&&)</h3>
-          <Notification count={3} /> <Notification count={0} />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 11: Отображение списков с ключами</h3>
-          <TaskList tasks={sampleTasks} />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 14: Передача аргументов обработчикам</h3>
-          <StudentSelector />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 15: Встроенные стили</h3>
-          <WarningBox />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 16: Фрагменты</h3>
-          <Info />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 17: Детская реквизитная работа</h3>
-          {cardUsage}
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 18: Распределение опор</h3>
-          <UserProfile {...user} />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 19: Выражения vs операторы</h3>
-          <Access isAdmin={true} /> <Access isAdmin={false} />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 20: Контролируемый ввод</h3>
-          <NameInput />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 24: Сложное форматирование</h3>
-          <Dashboard user={sampleUser} notifications={sampleNotifications} />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 25: Прогноз результата рендеринга</h3>
-          <Example />
-          <p>Результаты: 1) 5, 2) "b is bigger or equal", 3) пустой параграф</p>
-        </div>
-      </section>
-      
-      <section className="exercise-group">
-        <h2>Сложные упражнения</h2>
-        
-        <div className="exercise">
-          <h3>Упражнение 12: Отображение без JSX</h3>
-          <StudentList />
-        </div>
-        
-        <div className="exercise">
-          <h3>Упражнение 21: Безопасность JSX и XSS</h3>
-          <HtmlBlock html="<strong>Safe HTML</strong> <em>content</em>" />
-        </div>
-      </section>
-    </div>
+  return React.createElement(
+    'div',
+    { className: 'part-c-container' },
+    React.createElement('h1', null, 'Часть C: Практика JSX'),
+
+    React.createElement('section', { className: 'exercise-group' },
+      React.createElement('h2', null, 'Простые упражнения'),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 1: Простой заголовок JSX'),
+        titleElement
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 2: JSX с встроенным выражением'),
+        greetingElement
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 3: Исправление названий атрибутов'),
+        React.createElement(Header)
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 4: Корневой элемент с одним корнем'),
+        React.createElement(Greeting)
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 5: Самозакрывающиеся теги'),
+        React.createElement(Avatar)
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 13: Синтаксис обработчика событий'),
+        React.createElement(Clicker)
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 22: Именование компонентов'),
+        React.createElement(ProfileCard, { name: 'Test User' })
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 23: Комментарии JSX'),
+        React.createElement(Title)
+      )
+    ),
+
+    React.createElement('section', { className: 'exercise-group' },
+      React.createElement('h2', null, 'Средние упражнения'),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 6: JSX vs React.createElement'),
+        elementExercise6
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 7: Использование свойств в JSX'),
+        React.createElement(StudentCard, { name: 'Alice', group: 'CS-101' })
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 8: Деструктуризация'),
+        React.createElement(CourseInfo, { title: 'React Basics', credits: 3 })
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 9: Условная отрисовка (тернарный оператор)'),
+        React.createElement(Status, { isOnline: true }),
+        React.createElement(Status, { isOnline: false })
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 10: Условная отрисовка (&&)'),
+        React.createElement(Notification, { count: 3 }),
+        React.createElement(Notification, { count: 0 })
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 11: Отображение списков с ключами'),
+        React.createElement(TaskList, { tasks: sampleTasks })
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 14: Передача аргументов обработчикам'),
+        React.createElement(StudentSelector)
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 15: Встроенные стили'),
+        React.createElement(WarningBox)
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 16: Фрагменты'),
+        React.createElement(Info)
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 17: Детская реквизитная работа'),
+        cardUsage
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 18: Распределение опор'),
+        userProfileWithSpread
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 19: Выражения vs операторы'),
+        React.createElement(Access, { isAdmin: true }),
+        React.createElement(Access, { isAdmin: false })
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 20: Контролируемый ввод'),
+        React.createElement(NameInput)
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 24: Сложное форматирование'),
+        React.createElement(Dashboard, { user: sampleUser, notifications: sampleNotifications })
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 25: Прогноз результата рендеринга'),
+        React.createElement(Example),
+        React.createElement('p', null, 'Результаты: 1) 5, 2) "b is bigger or equal", 3) пустой параграф')
+      )
+    ),
+
+    React.createElement('section', { className: 'exercise-group' },
+      React.createElement('h2', null, 'Сложные упражнения'),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 12: Отображение без JSX'),
+        React.createElement(StudentList)
+      ),
+
+      React.createElement('div', { className: 'exercise' },
+        React.createElement('h3', null, 'Упражнение 21: Безопасность JSX и XSS'),
+        React.createElement(HtmlBlock, { html: '<strong>Safe HTML</strong> <em>content</em>' })
+      )
+    )
   );
 };
 

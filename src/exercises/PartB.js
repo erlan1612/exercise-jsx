@@ -1,3 +1,5 @@
+// PartB.js - Исправление ошибок JSX
+
 import React from 'react';
 
 // Упражнение B1 – Неправильные названия атрибутов
@@ -6,84 +8,85 @@ export function Header() {
     alert('Hello');
   };
 
-  return (
-    <div className="header">
-      <h1 onClick={handleClick}>Welcome</h1>
-    </div>
+  return React.createElement(
+    'div',
+    { className: 'header' },
+    React.createElement('h1', { onClick: handleClick }, 'Welcome')
   );
 }
 
 // Упражнение B2 – Множественные корневые элементы
 export function BadComponent() {
-  return (
-    <>
-      <h1>Title</h1>
-      <p>Subtitle</p>
-    </>
+  return React.createElement(
+    React.Fragment,
+    null,
+    React.createElement('h1', null, 'Title'),
+    React.createElement('p', null, 'Subtitle')
   );
 }
 
 // Упражнение B3 – Незакрытые теги
 export function ImageCard() {
-  return (
-    <div className="card">
-      <img src="/logo.png" alt="Logo" />
-      <p>Logo of our app</p>
-    </div>
+  return React.createElement(
+    'div',
+    { className: 'card' },
+    React.createElement('img', { src: '/logo.png', alt: 'Logo' }),
+    React.createElement('p', null, 'Logo of our app')
   );
 }
 
 // Упражнение B4 – Использование if внутри JSX
 export function Status({ isOnline }) {
-  return (
-    <div>
-      {isOnline ? (
-        <p>User is online</p>
-      ) : (
-        <p>User is offline</p>
-      )}
-    </div>
+  return React.createElement(
+    'div',
+    null,
+    isOnline ? 
+      React.createElement('p', null, 'User is online') : 
+      React.createElement('p', null, 'User is offline')
   );
 }
 
 // Упражнение B5 – Путаница между названием компонента и HTML-тегом
 export function UserCard(props) {
-  return (
-    <div className="user-card">
-      <h3>{props.name}</h3>
-    </div>
+  return React.createElement(
+    'div',
+    { className: 'user-card' },
+    React.createElement('h3', null, props.name)
   );
 }
 
 // Упражнение B6 – for и class в форме
 export function LoginForm() {
-  return (
-    <form>
-      <label htmlFor="email" className="label">
-        Email
-      </label>
-      <input id="email" type="email" />
-    </form>
+  return React.createElement(
+    'form',
+    null,
+    React.createElement('label', { htmlFor: 'email', className: 'label' }, 'Email'),
+    React.createElement('input', { id: 'email', type: 'email' })
   );
 }
 
 // Упражнение B7 – Отсутствующие элементы key в списке
 export function TodoList({ todos }) {
-  return (
-    <ul>
-      {todos.map((todo, index) => (
-        <li key={todo.id || index}>{todo.text}</li>
-      ))}
-    </ul>
+  return React.createElement(
+    'ul',
+    null,
+    todos.map((todo, index) => 
+      React.createElement('li', { key: todo.id || index }, todo.text)
+    )
   );
 }
 
 // Упражнение B8 – Неправильное использование стиля
 export function Box() {
-  return (
-    <div style={{ backgroundColor: 'red', padding: '10px' }}>
-      Warning
-    </div>
+  return React.createElement(
+    'div',
+    { 
+      style: { 
+        backgroundColor: 'red', 
+        padding: '10px' 
+      } 
+    },
+    'Warning'
   );
 }
 
@@ -93,17 +96,18 @@ export function Counter() {
     console.log('Button clicked!');
   };
 
-  return (
-    <button onClick={handleClick}>
-      Click me
-    </button>
+  return React.createElement(
+    'button',
+    { onClick: handleClick },
+    'Click me'
   );
 }
 
 // Упражнение B10 – dangerouslySetInnerHTML неправильное использование
 export function HtmlBlock({ html }) {
-  return (
-    <div dangerouslySetInnerHTML={{ __html: html }} />
+  return React.createElement(
+    'div',
+    { dangerouslySetInnerHTML: { __html: html } }
   );
 }
 
@@ -117,73 +121,73 @@ export const PartB = () => {
 
   const sampleHtml = '<strong>This is bold text</strong> and <em>italic text</em>';
 
-  return (
-    <div className="part-b-container">
-      <h1>Часть B: Исправление ошибок JSX</h1>
-      
-      <section className="exercise">
-        <h2>B1. Неправильные названия атрибутов</h2>
-        <Header />
-        <p className="note">Исправлено: class → className, onclick="alert('Hello')" → onClick={handleClick}</p>
-      </section>
-      
-      <section className="exercise">
-        <h2>B2. Множественные корневые элементы</h2>
-        <BadComponent />
-        <p className="note">Исправлено: используется Fragment (короткий синтаксис {'<> </>'})</p>
-      </section>
-      
-      <section className="exercise">
-        <h2>B3. Незакрытые теги</h2>
-        <ImageCard />
-        <p className="note">Исправлено: {'<img src="/logo.png">'} → {'<img src="/logo.png" alt="Logo" />'}</p>
-      </section>
-      
-      <section className="exercise">
-        <h2>B4. Использование if внутри JSX</h2>
-        <div className="status-examples">
-          <Status isOnline={true} />
-          <Status isOnline={false} />
-        </div>
-        <p className="note">Исправлено: if заменен на тернарный оператор</p>
-      </section>
-      
-      <section className="exercise">
-        <h2>B5. Путаница компонента и HTML-тега</h2>
-        <UserCard name="John Doe" />
-        <p className="note">Исправлено: usercard → UserCard (компоненты с большой буквы), {'<usercard>'} → {'<div className="user-card">'}</p>
-      </section>
-      
-      <section className="exercise">
-        <h2>B6. for и class в форме</h2>
-        <LoginForm />
-        <p className="note">Исправлено: for="email" → htmlFor="email", class="label" → className="label"</p>
-      </section>
-      
-      <section className="exercise">
-        <h2>B7. Отсутствующие key в списке</h2>
-        <TodoList todos={sampleTodos} />
-        <p className="note">Исправлено: добавлен key={todo.id || index} к каждому {'<li>'}</p>
-      </section>
-      
-      <section className="exercise">
-        <h2>B8. Неправильное использование стиля</h2>
-        <Box />
-        <p className="note">Исправлено: style="background-color: red;" → style={{backgroundColor: 'red', padding: '10px'}}</p>
-      </section>
-      
-      <section className="exercise">
-        <h2>B9. Обработчик событий в виде строки</h2>
-        <Counter />
-        <p className="note">Исправлено: onClick="handleClick()" → onClick={handleClick}</p>
-      </section>
-      
-      <section className="exercise">
-        <h2>B10. Неправильное использование dangerouslySetInnerHTML</h2>
-        <HtmlBlock html={sampleHtml} />
-        <p className="note">Исправлено: dangerouslySetInnerHTML={html} → dangerouslySetInnerHTML={{__html: html}}</p>
-      </section>
-    </div>
+  return React.createElement(
+    'div',
+    { className: 'part-b-container' },
+    React.createElement('h1', null, 'Часть B: Исправление ошибок JSX'),
+    
+    React.createElement('section', { className: 'exercise' },
+      React.createElement('h2', null, 'B1. Неправильные названия атрибутов'),
+      React.createElement(Header),
+      React.createElement('p', { className: 'note' }, 'Исправлено: class → className, onclick → onClick')
+    ),
+    
+    React.createElement('section', { className: 'exercise' },
+      React.createElement('h2', null, 'B2. Множественные корневые элементы'),
+      React.createElement(BadComponent),
+      React.createElement('p', { className: 'note' }, 'Исправлено: используется Fragment (React.Fragment)')
+    ),
+    
+    React.createElement('section', { className: 'exercise' },
+      React.createElement('h2', null, 'B3. Незакрытые теги'),
+      React.createElement(ImageCard),
+      React.createElement('p', { className: 'note' }, 'Исправлено: img тег закрыт, добавлен alt атрибут')
+    ),
+    
+    React.createElement('section', { className: 'exercise' },
+      React.createElement('h2', null, 'B4. Использование if внутри JSX'),
+      React.createElement('div', { className: 'status-examples' },
+        React.createElement(Status, { isOnline: true }),
+        React.createElement(Status, { isOnline: false })
+      ),
+      React.createElement('p', { className: 'note' }, 'Исправлено: if заменен на тернарный оператор')
+    ),
+    
+    React.createElement('section', { className: 'exercise' },
+      React.createElement('h2', null, 'B5. Путаница компонента и HTML-тега'),
+      React.createElement(UserCard, { name: 'John Doe' }),
+      React.createElement('p', { className: 'note' }, 'Исправлено: usercard → UserCard, использование div вместо кастомного тега')
+    ),
+    
+    React.createElement('section', { className: 'exercise' },
+      React.createElement('h2', null, 'B6. for и class в форме'),
+      React.createElement(LoginForm),
+      React.createElement('p', { className: 'note' }, 'Исправлено: for → htmlFor, class → className')
+    ),
+    
+    React.createElement('section', { className: 'exercise' },
+      React.createElement('h2', null, 'B7. Отсутствующие key в списке'),
+      React.createElement(TodoList, { todos: sampleTodos }),
+      React.createElement('p', { className: 'note' }, 'Исправлено: добавлен key для элементов списка')
+    ),
+    
+    React.createElement('section', { className: 'exercise' },
+      React.createElement('h2', null, 'B8. Неправильное использование стиля'),
+      React.createElement(Box),
+      React.createElement('p', { className: 'note' }, 'Исправлено: style использует объект вместо строки')
+    ),
+    
+    React.createElement('section', { className: 'exercise' },
+      React.createElement('h2', null, 'B9. Обработчик событий в виде строки'),
+      React.createElement(Counter),
+      React.createElement('p', { className: 'note' }, 'Исправлено: onClick использует функцию вместо строки')
+    ),
+    
+    React.createElement('section', { className: 'exercise' },
+      React.createElement('h2', null, 'B10. Неправильное использование dangerouslySetInnerHTML'),
+      React.createElement(HtmlBlock, { html: sampleHtml }),
+      React.createElement('p', { className: 'note' }, 'Исправлено: dangerouslySetInnerHTML получает объект с __html')
+    )
   );
 };
 
